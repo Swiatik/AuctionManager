@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f942e2f96ae74c06ac5fadf1f56ae965" Name="Diagram1" ZoomLevel="47">
+        <EntityTypeShape EntityType="auctionDBModel.Auth" Width="1.5" PointX="10.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="auctionDBModel.Bid" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="auctionDBModel.Client" Width="1.5" PointX="5.625" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="auctionDBModel.Employee" Width="1.5" PointX="13" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="auctionDBModel.Lot" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="auctionDBModel.LotLocation" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="auctionDBModel.LotType" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="auctionDBModel.OrderStatus" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="auctionDBModel.Post" Width="1.5" PointX="10.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="auctionDBModel.Sale" Width="1.5" PointX="8.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="auctionDBModel.Seller" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="auctionDBModel.FK_Employee_Auth" ManuallyRouted="false" />
+        <AssociationConnector Association="auctionDBModel.FK_Auction_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="auctionDBModel.FK_Auction_Lot" ManuallyRouted="false" />
+        <AssociationConnector Association="auctionDBModel.FK_Order_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="auctionDBModel.FK_Employee_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="auctionDBModel.FK_Lot_LotLocation" ManuallyRouted="false" />
+        <AssociationConnector Association="auctionDBModel.FK_Lot_LotType" ManuallyRouted="false" />
+        <AssociationConnector Association="auctionDBModel.FK_Lot_Seller" ManuallyRouted="false" />
+        <AssociationConnector Association="auctionDBModel.FK_Order_Lot" ManuallyRouted="false" />
+        <AssociationConnector Association="auctionDBModel.FK_Order_OrderStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="auctionDBModel.FK_Order_Seller" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

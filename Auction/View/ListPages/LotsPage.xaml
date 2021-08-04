@@ -1,0 +1,70 @@
+﻿<Page x:Class="Auction.View.LotsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Converter="clr-namespace:Auction.Converters"
+      xmlns:local="clr-namespace:Auction.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="LotsPage">
+    <Page.Resources>
+        <Style TargetType="Border">
+            <Setter Property="Background" Value="#1D7373"/>
+        </Style>
+        <Converter:MoneyConverter x:Key="my:MoneyConverter"/>
+        <Converter:DateConverter x:Key="my:DateConverter"/>
+        <Converter:VisibilityConverter x:Key="my:VisibilityConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="13*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Lots" FontFamily="Calibri" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Border Margin="45,0" Height="35" Grid.Row="1">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="Search" Foreground="White" Margin="0,0,60,0" FontWeight="Bold" FontSize="15"/>
+                <TextBlock Text="Name:" Foreground="White" Margin="0,1,0,0"/>
+                <TextBox  Name="NameTextBox" Height="20" Width="70" KeyUp="TextBox_KeyUp" Margin="10,0"/>
+                <TextBlock Text="Seller:" Foreground="White" Margin="0,1,0,0"/>
+                <TextBox  Name="SellerTextBox" Height="20" Width="70" KeyUp="TextBox_KeyUp" Margin="10,0"/>
+                <TextBlock Text="MinPrice:" Foreground="White" Margin="0,1,0,0"/>
+                <TextBox  Name="MinPriceTextBox" Height="20" Width="30" KeyUp="TextBox_KeyUp" Margin="10,0"/>
+                <TextBlock Text="PreferredPrice:" Foreground="White" Margin="0,1,0,0"/>
+                <TextBox  Name="PreferredPriceTextBox" Height="20" Width="30" KeyUp="TextBox_KeyUp" Margin="10,0"/>
+                <TextBlock Text="Type:" Foreground="White" Margin="0,1,0,0"/>
+                <TextBox  Name="TypeTextBox" Height="20" Width="50" KeyUp="TextBox_KeyUp" Margin="10,0"/>
+                </StackPanel>
+            </Border>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="2">
+            <DataGrid Name="LotDataGrid" Height="Auto" Width="Auto" AutoGenerateColumns="False" HorizontalAlignment="Left"
+                      IsReadOnly="True" Margin="10" VerticalAlignment="Top"  ItemsSource="{Binding Path=Lots, UpdateSourceTrigger=PropertyChanged}"
+                      SelectionMode="Single" MouseDoubleClick="UpdateButton_Click">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=TwoWay}"/>
+                    <DataGridTextColumn Header="Seller" Binding="{Binding Path=Seller, Mode=TwoWay}"/>
+                    <DataGridTextColumn Header="MinPrice" Binding="{Binding Path=MinPrice, Mode=TwoWay,
+                            Converter={StaticResource my:MoneyConverter}}"/>
+                    <DataGridTextColumn Header="PreferredPrice" Binding="{Binding Path=PreferredPrice, Mode=TwoWay,
+                            Converter={StaticResource my:MoneyConverter}}"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Path=Type, Mode=TwoWay}"/>
+                    <DataGridTextColumn Header="StartDate" Binding="{Binding Path=StartDate, Mode=TwoWay,
+                            Converter={StaticResource my:DateConverter}}"/>
+                    <DataGridTextColumn Header="CloseDate" Binding="{Binding Path=PlannedCloseDate, Mode=TwoWay,
+                            Converter={StaticResource my:DateConverter}}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel>
+                <Button Name="AddButton" Content="Add" Click="AddButton_Click" Visibility="{Binding User,
+                    Converter={StaticResource my:VisibilityConverter}}"/>
+                <Button Name="UpdateButton" Content="Update" Click="UpdateButton_Click" Visibility="{Binding User,
+                    Converter={StaticResource my:VisibilityConverter}}"/>
+                <Button Name ="DeleteButton" Content="Delete" Click="DeleteButton_Click" Visibility="{Binding User,
+                    Converter={StaticResource my:VisibilityConverter}}"/>
+                <Button Content="Back" Command="{Binding BackCommand}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

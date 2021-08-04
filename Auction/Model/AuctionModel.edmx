@@ -1,0 +1,819 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="auctionDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Auth">
+          <Key>
+            <PropertyRef Name="auth_id" />
+          </Key>
+          <Property Name="auth_id" Type="int" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Bid">
+          <Key>
+            <PropertyRef Name="auction_id" />
+          </Key>
+          <Property Name="auction_id" Type="int" Nullable="false" />
+          <Property Name="lot_id" Type="int" />
+          <Property Name="client_id" Type="int" />
+          <Property Name="bid" Type="int" />
+          <Property Name="time" Type="datetime" />
+          <Property Name="create_date" Type="date" />
+          <Property Name="update_date" Type="date" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="number" Type="nvarchar" MaxLength="20" />
+          <Property Name="create_date" Type="date" />
+          <Property Name="update_date" Type="date" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="number" Type="nvarchar" MaxLength="50" />
+          <Property Name="post_id" Type="int" />
+          <Property Name="auth_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Lot">
+          <Key>
+            <PropertyRef Name="lot_id" />
+          </Key>
+          <Property Name="lot_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="seller_id" Type="int" />
+          <Property Name="min_price" Type="int" />
+          <Property Name="preferred_price" Type="int" />
+          <Property Name="start_day" Type="date" />
+          <Property Name="planned_close_day" Type="date" />
+          <Property Name="type_id" Type="int" />
+          <Property Name="location_id" Type="int" />
+          <Property Name="create_date" Type="date" />
+          <Property Name="update_date" Type="date" />
+        </EntityType>
+        <EntityType Name="LotLocation">
+          <Key>
+            <PropertyRef Name="location_id" />
+          </Key>
+          <Property Name="location_id" Type="int" Nullable="false" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" />
+          <Property Name="street" Type="nvarchar" MaxLength="50" />
+          <Property Name="house_number" Type="int" />
+          <Property Name="create_date" Type="date" />
+          <Property Name="update_date" Type="date" />
+        </EntityType>
+        <EntityType Name="LotType">
+          <Key>
+            <PropertyRef Name="type_id" />
+          </Key>
+          <Property Name="type_id" Type="int" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" />
+          <Property Name="create_date" Type="date" />
+          <Property Name="update_date" Type="date" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="int" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="30" />
+          <Property Name="create_date" Type="date" />
+          <Property Name="update_date" Type="date" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="int" Nullable="false" />
+          <Property Name="post" Type="nvarchar" MaxLength="50" />
+          <Property Name="min_sallary" Type="nvarchar" MaxLength="50" />
+          <Property Name="hours_per_day" Type="decimal" Precision="18" Scale="1" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="lot_id" Type="int" />
+          <Property Name="seller_id" Type="int" />
+          <Property Name="client_id" Type="int" />
+          <Property Name="price" Type="int" />
+          <Property Name="status_id" Type="int" />
+          <Property Name="date" Type="date" />
+          <Property Name="create_date" Type="date" />
+        </EntityType>
+        <EntityType Name="Seller">
+          <Key>
+            <PropertyRef Name="seller_id" />
+          </Key>
+          <Property Name="seller_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="number" Type="nvarchar" MaxLength="20" />
+          <Property Name="create_date" Type="date" />
+          <Property Name="update_date" Type="date" />
+        </EntityType>
+        <Association Name="FK_Auction_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Bid" Type="Self.Bid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="Bid">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Auction_Lot">
+          <End Role="Lot" Type="Self.Lot" Multiplicity="0..1" />
+          <End Role="Bid" Type="Self.Bid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lot">
+              <PropertyRef Name="lot_id" />
+            </Principal>
+            <Dependent Role="Bid">
+              <PropertyRef Name="lot_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Auth">
+          <End Role="Auth" Type="Self.Auth" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Auth">
+              <PropertyRef Name="auth_id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="auth_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lot_LotLocation">
+          <End Role="LotLocation" Type="Self.LotLocation" Multiplicity="0..1" />
+          <End Role="Lot" Type="Self.Lot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LotLocation">
+              <PropertyRef Name="location_id" />
+            </Principal>
+            <Dependent Role="Lot">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lot_LotType">
+          <End Role="LotType" Type="Self.LotType" Multiplicity="0..1" />
+          <End Role="Lot" Type="Self.Lot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LotType">
+              <PropertyRef Name="type_id" />
+            </Principal>
+            <Dependent Role="Lot">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lot_Seller">
+          <End Role="Seller" Type="Self.Seller" Multiplicity="0..1" />
+          <End Role="Lot" Type="Self.Lot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller">
+              <PropertyRef Name="seller_id" />
+            </Principal>
+            <Dependent Role="Lot">
+              <PropertyRef Name="seller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Lot">
+          <End Role="Lot" Type="Self.Lot" Multiplicity="0..1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lot">
+              <PropertyRef Name="lot_id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="lot_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_OrderStatus">
+          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="0..1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Seller">
+          <End Role="Seller" Type="Self.Seller" Multiplicity="0..1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller">
+              <PropertyRef Name="seller_id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="seller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="auctionDBModelStoreContainer">
+          <EntitySet Name="Auth" EntityType="Self.Auth" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bid" EntityType="Self.Bid" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lot" EntityType="Self.Lot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LotLocation" EntityType="Self.LotLocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LotType" EntityType="Self.LotType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sale" EntityType="Self.Sale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seller" EntityType="Self.Seller" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Auction_Client" Association="Self.FK_Auction_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Bid" EntitySet="Bid" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Auction_Lot" Association="Self.FK_Auction_Lot">
+            <End Role="Lot" EntitySet="Lot" />
+            <End Role="Bid" EntitySet="Bid" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Auth" Association="Self.FK_Employee_Auth">
+            <End Role="Auth" EntitySet="Auth" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Post" Association="Self.FK_Employee_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lot_LotLocation" Association="Self.FK_Lot_LotLocation">
+            <End Role="LotLocation" EntitySet="LotLocation" />
+            <End Role="Lot" EntitySet="Lot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lot_LotType" Association="Self.FK_Lot_LotType">
+            <End Role="LotType" EntitySet="LotType" />
+            <End Role="Lot" EntitySet="Lot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lot_Seller" Association="Self.FK_Lot_Seller">
+            <End Role="Seller" EntitySet="Seller" />
+            <End Role="Lot" EntitySet="Lot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Lot" Association="Self.FK_Order_Lot">
+            <End Role="Lot" EntitySet="Lot" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_OrderStatus" Association="Self.FK_Order_OrderStatus">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Seller" Association="Self.FK_Order_Seller">
+            <End Role="Seller" EntitySet="Seller" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="auctionDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Auth">
+          <Key>
+            <PropertyRef Name="auth_id" />
+          </Key>
+          <Property Name="auth_id" Type="Int32" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Auth" FromRole="Auth" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Bid">
+          <Key>
+            <PropertyRef Name="auction_id" />
+          </Key>
+          <Property Name="auction_id" Type="Int32" Nullable="false" />
+          <Property Name="lot_id" Type="Int32" />
+          <Property Name="client_id" Type="Int32" />
+          <Property Name="bid1" Type="Int32" />
+          <Property Name="time" Type="DateTime" Precision="3" />
+          <Property Name="create_date" Type="DateTime" Precision="0" />
+          <Property Name="update_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Auction_Client" FromRole="Bid" ToRole="Client" />
+          <NavigationProperty Name="Lot" Relationship="Self.FK_Auction_Lot" FromRole="Bid" ToRole="Lot" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="0" />
+          <Property Name="update_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Bid" Relationship="Self.FK_Auction_Client" FromRole="Client" ToRole="Bid" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK_Order_Client" FromRole="Client" ToRole="Sale" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="post_id" Type="Int32" />
+          <Property Name="auth_id" Type="Int32" />
+          <NavigationProperty Name="Auth" Relationship="Self.FK_Employee_Auth" FromRole="Employee" ToRole="Auth" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Employee_Post" FromRole="Employee" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Lot">
+          <Key>
+            <PropertyRef Name="lot_id" />
+          </Key>
+          <Property Name="lot_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="seller_id" Type="Int32" />
+          <Property Name="min_price" Type="Int32" />
+          <Property Name="preferred_price" Type="Int32" />
+          <Property Name="start_day" Type="DateTime" Precision="0" />
+          <Property Name="planned_close_day" Type="DateTime" Precision="0" />
+          <Property Name="type_id" Type="Int32" />
+          <Property Name="location_id" Type="Int32" />
+          <Property Name="create_date" Type="DateTime" Precision="0" />
+          <Property Name="update_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Bid" Relationship="Self.FK_Auction_Lot" FromRole="Lot" ToRole="Bid" />
+          <NavigationProperty Name="LotLocation" Relationship="Self.FK_Lot_LotLocation" FromRole="Lot" ToRole="LotLocation" />
+          <NavigationProperty Name="LotType" Relationship="Self.FK_Lot_LotType" FromRole="Lot" ToRole="LotType" />
+          <NavigationProperty Name="Seller" Relationship="Self.FK_Lot_Seller" FromRole="Lot" ToRole="Seller" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK_Order_Lot" FromRole="Lot" ToRole="Sale" />
+        </EntityType>
+        <EntityType Name="LotLocation">
+          <Key>
+            <PropertyRef Name="location_id" />
+          </Key>
+          <Property Name="location_id" Type="Int32" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="house_number" Type="Int32" />
+          <Property Name="create_date" Type="DateTime" Precision="0" />
+          <Property Name="update_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Lot" Relationship="Self.FK_Lot_LotLocation" FromRole="LotLocation" ToRole="Lot" />
+        </EntityType>
+        <EntityType Name="LotType">
+          <Key>
+            <PropertyRef Name="type_id" />
+          </Key>
+          <Property Name="type_id" Type="Int32" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="0" />
+          <Property Name="update_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Lot" Relationship="Self.FK_Lot_LotType" FromRole="LotType" ToRole="Lot" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="0" />
+          <Property Name="update_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK_Order_OrderStatus" FromRole="OrderStatus" ToRole="Sale" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="Int32" Nullable="false" />
+          <Property Name="post1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="min_sallary" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="hours_per_day" Type="Decimal" Precision="18" Scale="1" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Post" FromRole="Post" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="lot_id" Type="Int32" />
+          <Property Name="seller_id" Type="Int32" />
+          <Property Name="client_id" Type="Int32" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="status_id" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="create_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Order_Client" FromRole="Sale" ToRole="Client" />
+          <NavigationProperty Name="Lot" Relationship="Self.FK_Order_Lot" FromRole="Sale" ToRole="Lot" />
+          <NavigationProperty Name="OrderStatus" Relationship="Self.FK_Order_OrderStatus" FromRole="Sale" ToRole="OrderStatus" />
+          <NavigationProperty Name="Seller" Relationship="Self.FK_Order_Seller" FromRole="Sale" ToRole="Seller" />
+        </EntityType>
+        <EntityType Name="Seller">
+          <Key>
+            <PropertyRef Name="seller_id" />
+          </Key>
+          <Property Name="seller_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="0" />
+          <Property Name="update_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Lot" Relationship="Self.FK_Lot_Seller" FromRole="Seller" ToRole="Lot" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK_Order_Seller" FromRole="Seller" ToRole="Sale" />
+        </EntityType>
+        <Association Name="FK_Employee_Auth">
+          <End Role="Auth" Type="Self.Auth" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Auth">
+              <PropertyRef Name="auth_id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="auth_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Auction_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Bid" Type="Self.Bid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="Bid">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Auction_Lot">
+          <End Role="Lot" Type="Self.Lot" Multiplicity="0..1" />
+          <End Role="Bid" Type="Self.Bid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lot">
+              <PropertyRef Name="lot_id" />
+            </Principal>
+            <Dependent Role="Bid">
+              <PropertyRef Name="lot_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lot_LotLocation">
+          <End Role="LotLocation" Type="Self.LotLocation" Multiplicity="0..1" />
+          <End Role="Lot" Type="Self.Lot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LotLocation">
+              <PropertyRef Name="location_id" />
+            </Principal>
+            <Dependent Role="Lot">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lot_LotType">
+          <End Role="LotType" Type="Self.LotType" Multiplicity="0..1" />
+          <End Role="Lot" Type="Self.Lot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LotType">
+              <PropertyRef Name="type_id" />
+            </Principal>
+            <Dependent Role="Lot">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lot_Seller">
+          <End Role="Seller" Type="Self.Seller" Multiplicity="0..1" />
+          <End Role="Lot" Type="Self.Lot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller">
+              <PropertyRef Name="seller_id" />
+            </Principal>
+            <Dependent Role="Lot">
+              <PropertyRef Name="seller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Lot">
+          <End Role="Lot" Type="Self.Lot" Multiplicity="0..1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lot">
+              <PropertyRef Name="lot_id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="lot_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_OrderStatus">
+          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="0..1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Seller">
+          <End Role="Seller" Type="Self.Seller" Multiplicity="0..1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller">
+              <PropertyRef Name="seller_id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="seller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="auctionDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Auth" EntityType="Self.Auth" />
+          <EntitySet Name="Bid" EntityType="Self.Bid" />
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Lot" EntityType="Self.Lot" />
+          <EntitySet Name="LotLocation" EntityType="Self.LotLocation" />
+          <EntitySet Name="LotType" EntityType="Self.LotType" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" />
+          <EntitySet Name="Post" EntityType="Self.Post" />
+          <EntitySet Name="Sale" EntityType="Self.Sale" />
+          <EntitySet Name="Seller" EntityType="Self.Seller" />
+          <AssociationSet Name="FK_Employee_Auth" Association="Self.FK_Employee_Auth">
+            <End Role="Auth" EntitySet="Auth" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Auction_Client" Association="Self.FK_Auction_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Bid" EntitySet="Bid" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Auction_Lot" Association="Self.FK_Auction_Lot">
+            <End Role="Lot" EntitySet="Lot" />
+            <End Role="Bid" EntitySet="Bid" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Post" Association="Self.FK_Employee_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lot_LotLocation" Association="Self.FK_Lot_LotLocation">
+            <End Role="LotLocation" EntitySet="LotLocation" />
+            <End Role="Lot" EntitySet="Lot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lot_LotType" Association="Self.FK_Lot_LotType">
+            <End Role="LotType" EntitySet="LotType" />
+            <End Role="Lot" EntitySet="Lot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lot_Seller" Association="Self.FK_Lot_Seller">
+            <End Role="Seller" EntitySet="Seller" />
+            <End Role="Lot" EntitySet="Lot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Lot" Association="Self.FK_Order_Lot">
+            <End Role="Lot" EntitySet="Lot" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_OrderStatus" Association="Self.FK_Order_OrderStatus">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Seller" Association="Self.FK_Order_Seller">
+            <End Role="Seller" EntitySet="Seller" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="auctionDBModelStoreContainer" CdmEntityContainer="auctionDBEntities">
+          <EntitySetMapping Name="Auth">
+            <EntityTypeMapping TypeName="auctionDBModel.Auth">
+              <MappingFragment StoreEntitySet="Auth">
+                <ScalarProperty Name="auth_id" ColumnName="auth_id" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bid">
+            <EntityTypeMapping TypeName="auctionDBModel.Bid">
+              <MappingFragment StoreEntitySet="Bid">
+                <ScalarProperty Name="auction_id" ColumnName="auction_id" />
+                <ScalarProperty Name="lot_id" ColumnName="lot_id" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="bid1" ColumnName="bid" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="auctionDBModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="auctionDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="auth_id" ColumnName="auth_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lot">
+            <EntityTypeMapping TypeName="auctionDBModel.Lot">
+              <MappingFragment StoreEntitySet="Lot">
+                <ScalarProperty Name="lot_id" ColumnName="lot_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="seller_id" ColumnName="seller_id" />
+                <ScalarProperty Name="min_price" ColumnName="min_price" />
+                <ScalarProperty Name="preferred_price" ColumnName="preferred_price" />
+                <ScalarProperty Name="start_day" ColumnName="start_day" />
+                <ScalarProperty Name="planned_close_day" ColumnName="planned_close_day" />
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="location_id" ColumnName="location_id" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LotLocation">
+            <EntityTypeMapping TypeName="auctionDBModel.LotLocation">
+              <MappingFragment StoreEntitySet="LotLocation">
+                <ScalarProperty Name="location_id" ColumnName="location_id" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="house_number" ColumnName="house_number" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LotType">
+            <EntityTypeMapping TypeName="auctionDBModel.LotType">
+              <MappingFragment StoreEntitySet="LotType">
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStatus">
+            <EntityTypeMapping TypeName="auctionDBModel.OrderStatus">
+              <MappingFragment StoreEntitySet="OrderStatus">
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post">
+            <EntityTypeMapping TypeName="auctionDBModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="post1" ColumnName="post" />
+                <ScalarProperty Name="min_sallary" ColumnName="min_sallary" />
+                <ScalarProperty Name="hours_per_day" ColumnName="hours_per_day" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sale">
+            <EntityTypeMapping TypeName="auctionDBModel.Sale">
+              <MappingFragment StoreEntitySet="Sale">
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="lot_id" ColumnName="lot_id" />
+                <ScalarProperty Name="seller_id" ColumnName="seller_id" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seller">
+            <EntityTypeMapping TypeName="auctionDBModel.Seller">
+              <MappingFragment StoreEntitySet="Seller">
+                <ScalarProperty Name="seller_id" ColumnName="seller_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
